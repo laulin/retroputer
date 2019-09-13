@@ -5,7 +5,7 @@ build_spi: setup
 	avr-gcc -mmcu=atmega328p -o output/arduino/main_spi.bin output/arduino/spi.o output/arduino/main_spi.o
 	avr-objcopy -O ihex -R .eeprom output/arduino/main_spi.bin output/arduino/main_spi.hex
 
-upload_spi:
+upload_spi: build_spi
 	sudo avrdude -F -V -c arduino -p ATMEGA328P -P /dev/ttyACM0 -b 115200 -U flash:w:output/arduino/main_spi.hex
 
 setup:
