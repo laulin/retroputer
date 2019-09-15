@@ -16,11 +16,7 @@ void init_spi(void)
     SPI_DDR |= SPI_MOSI_OFFSET | SPI_CLK_OFFSET;
     // SPI_MISO_DDR is unchange, 0/input by default 
 
-    RAM0_SELECT_PORT |= RAM0_SELECT_OFFSET;
-    RAM1_SELECT_PORT |= RAM1_SELECT_OFFSET;
-    ROM0_SELECT_PORT |= ROM0_SELECT_OFFSET;
-    ROM1_SELECT_PORT |= ROM1_SELECT_OFFSET;
-    IO_SELECT_PORT |= IO_SELECT_OFFSET;
+    set_all_select();
 
     // define SPI master 
     SPCR = (1<<SPE) | (1<<MSTR);
@@ -114,5 +110,14 @@ void clear_io_select(void)
 
 void set_io_select(void)
 {
+    IO_SELECT_PORT |= IO_SELECT_OFFSET;
+}
+
+void set_all_select(void)
+{
+    RAM0_SELECT_PORT |= RAM0_SELECT_OFFSET;
+    RAM1_SELECT_PORT |= RAM1_SELECT_OFFSET;
+    ROM0_SELECT_PORT |= ROM0_SELECT_OFFSET;
+    ROM1_SELECT_PORT |= ROM1_SELECT_OFFSET;
     IO_SELECT_PORT |= IO_SELECT_OFFSET;
 }

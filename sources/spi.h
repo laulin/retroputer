@@ -40,5 +40,6 @@ void clear_rom1_select(void);
 void set_rom1_select(void);
 void clear_io_select(void);
 void set_io_select(void);
+void set_all_select(void);
 
 #endif //__SPI_HEADER__
