@@ -1,5 +1,4 @@
 #include "spi.h"
-#include <stdint.h>
 
 // this is an hardware abstraction layer
 // can't be unit tester !

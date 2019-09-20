@@ -1,6 +1,9 @@
 #ifndef __SPI_HEADER__
 #define __SPI_HEADER__
 
+#include <stdint.h>
+
+#ifndef x86
 #include <avr/io.h>
 
 #define RAM0_SELECT_DDR         DDRD
@@ -24,6 +27,8 @@
 #define SPI_MOSI_OFFSET         (1<<3)
 #define SPI_MISO_OFFSET         (1<<4)
 #define SPI_CLK_OFFSET          (1<<5)
+
+#endif // not x86
 
 void init_spi(void);
 uint8_t read_write_spi (uint8_t data);
