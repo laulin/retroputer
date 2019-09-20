@@ -8,6 +8,13 @@ build_spi: setup
 upload_spi: build_spi
 	sudo avrdude -F -V -c arduino -p ATMEGA328P -P /dev/ttyACM0 -b 115200 -U flash:w:output/arduino/main_spi.hex
 
+build_sram_so:
+	gcc -Wall -std=c11 -Dx86 -shared -o output/x86/sram.so -fPIC sources/mock_spi.c sources/sram.c
+	gcc -Dx86 -E sources/sram.h > output/x86/sram.e
+
+test: build_sram_so
+	python3 tests/test_sram.py
+
 setup:
 	mkdir -p output/
 	mkdir -p output/x86
