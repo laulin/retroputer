@@ -63,7 +63,14 @@ class TestSRAM(unittest.TestCase):
     def test_split_sram_request_b1_size(self):
         _, _, _, b1_size = self.split_sram_request(0x1FFF0, 128)
         self.assertEqual(b1_size, 128-0xF)
-        
+
+    def test_address_to_array(self):
+        address_array = ffi.new("uint8_t[3]")
+        lib.address_to_array(0x1FFF0, address_array)
+        result = (address_array[0], address_array[1], address_array[2])
+        self.assertEqual((1, 0xFF, 0xF0), result)
+
+    
 
 
 if __name__ == "__main__":
