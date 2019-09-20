@@ -105,14 +105,14 @@ uint8_t rw_bytes_sram(uint8_t rw, uint32_t address, uint8_t* data, uint32_t size
         case BANK_0:
         case BANK_1:
         {
-            rw_bytes_23LC1024(WRITE_SRAM, banks, address, data, size);
+            rw_bytes_23LC1024(rw, banks, address, data, size);
             break;
         }
         case BANK_0_AND_1:
         {
             split_sram_request(address, size, &b0_addr, &b0_size, &b1_addr, &b1_size);
-            rw_bytes_23LC1024(WRITE_SRAM, BANK_0, b0_addr, data, b0_size);
-            rw_bytes_23LC1024(WRITE_SRAM, BANK_1, b1_addr, &data[b0_size], b1_size);
+            rw_bytes_23LC1024(rw, BANK_0, b0_addr, data, b0_size);
+            rw_bytes_23LC1024(rw, BANK_1, b1_addr, &data[b0_size], b1_size);
         }
         default:
             return SRAM_OUT_OF_RANGE;
