@@ -11,7 +11,7 @@
 // Designated RAM0 and RAM1, the memory space is here linear :
 // running out of RAM0 will go to RAM1.
 
-#define SRAM_BANK_SIZE      (128*1024) // 128KB
+#define SRAM_BANK_SIZE      0x20000 // 128KB
 #define SRAM_BANK_NUMBER    2
 #define SRAM_SIZE           (SRAM_BANK_SIZE * SRAM_BANK_NUMBER)
 
