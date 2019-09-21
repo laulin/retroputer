@@ -15,11 +15,16 @@ build_sram_so:
 test: build_sram_so
 	python3 tests/test_sram.py
 
+build_hal: 
+	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -c -o output/arduino/spi.o sources/spi.c
+	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -c -o output/arduino/sram.o sources/sram.c
+	avr-ar -r "output/arduino/libhal.a" output/arduino/*.o
+
 setup:
 	mkdir -p output/
 	mkdir -p output/x86
 	mkdir -p output/arduino
 
 clean:
-	rm output/arduino/*
-	rm output/x86/*
+	rm -f output/arduino/*
+	rm -f output/x86/*
