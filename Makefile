@@ -18,6 +18,7 @@ test: build_sram_so
 build_hal: 
 	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -c -o output/arduino/spi.o sources/spi.c
 	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -c -o output/arduino/sram.o sources/sram.c
+	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -c -o output/arduino/port_expander.o sources/port_expander.c
 	avr-ar -r "output/arduino/libhal.a" output/arduino/*.o
 
 setup:
