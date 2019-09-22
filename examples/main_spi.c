@@ -1,4 +1,4 @@
-#include "spi.h"
+#include "hal.h"
 #include <stdint.h>
 
 // Test hardware of SPI device
@@ -28,7 +28,7 @@ int main()
         set_rom1_select();
 
         clear_io_select();
-        read_write_spi(0x00);
+        read_write_spi(0x43);
         set_io_select();
 
     }
