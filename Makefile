@@ -12,6 +12,13 @@ example_ram: setup build_hal
 	avr-objcopy -O ihex -R .eeprom output/arduino/main_ram.bin output/arduino/main_ram.hex
 	sudo avrdude -F -V -c arduino -p ATMEGA328P -P /dev/ttyACM0 -b 115200 -U flash:w:output/arduino/main_ram.hex
 
+example_uart: setup build_hal
+	# need apt install gcc-avr binutils-avr avr-libc avrdude
+	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -I sources/ -c -o output/arduino/main_uart.o examples/main_uart.c
+	avr-gcc -mmcu=atmega328p -L"$(shell pwd)/output/arduino" -o output/arduino/main_uart.bin output/arduino/main_uart.o -lhal
+	avr-objcopy -O ihex -R .eeprom output/arduino/main_uart.bin output/arduino/main_uart.hex
+	sudo avrdude -F -V -c arduino -p ATMEGA328P -P /dev/ttyACM0 -b 115200 -U flash:w:output/arduino/main_uart.hex
+
 
 build_sram_so:
 	gcc -Wall -std=c11 -Dx86 -shared -o output/x86/sram.so -fPIC sources/mock_spi.c sources/sram.c
@@ -24,6 +31,7 @@ build_hal:
 	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -c -o output/arduino/spi.o sources/spi.c
 	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -c -o output/arduino/sram.o sources/sram.c
 	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -c -o output/arduino/port_expander.o sources/port_expander.c
+	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -c -o output/arduino/hw_uart.o sources/hw_uart.c
 	avr-ar -r "output/arduino/libhal.a" output/arduino/*.o
 
 setup:
