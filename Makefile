@@ -19,6 +19,13 @@ example_uart: setup build_hal
 	avr-objcopy -O ihex -R .eeprom output/arduino/main_uart.bin output/arduino/main_uart.hex
 	sudo avrdude -F -V -c arduino -p ATMEGA328P -P /dev/ttyACM0 -b 115200 -U flash:w:output/arduino/main_uart.hex
 
+system_check: setup build_hal
+	# need apt install gcc-avr binutils-avr avr-libc avrdude
+	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -I sources/ -c -o output/arduino/check.o tests/check.c
+	avr-gcc -mmcu=atmega328p -L"$(shell pwd)/output/arduino" -o output/arduino/check.bin output/arduino/check.o -lhal
+	avr-objcopy -O ihex -R .eeprom output/arduino/check.bin output/arduino/check.hex
+	sudo avrdude -F -V -c arduino -p ATMEGA328P -P /dev/ttyACM0 -b 115200 -U flash:w:output/arduino/check.hex
+
 
 build_sram_so:
 	gcc -Wall -std=c11 -Dx86 -shared -o output/x86/sram.so -fPIC sources/mock_spi.c sources/sram.c
