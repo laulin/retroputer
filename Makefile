@@ -1,10 +1,17 @@
 example_spi: setup build_hal
 	# need apt install gcc-avr binutils-avr avr-libc avrdude
-	# avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -c -o output/arduino/spi.o sources/spi.c
 	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -I sources/ -c -o output/arduino/main_spi.o examples/main_spi.c
-	avr-gcc -mmcu=atmega328p -L"$(shell pwd)/output/arduino" -o output/arduino/main_spi.bin output/arduino/spi.o output/arduino/main_spi.o
+	avr-gcc -mmcu=atmega328p -L"$(shell pwd)/output/arduino" -o output/arduino/main_spi.bin output/arduino/main_spi.o -lhal
 	avr-objcopy -O ihex -R .eeprom output/arduino/main_spi.bin output/arduino/main_spi.hex
 	sudo avrdude -F -V -c arduino -p ATMEGA328P -P /dev/ttyACM0 -b 115200 -U flash:w:output/arduino/main_spi.hex
+
+example_ram: setup build_hal
+	# need apt install gcc-avr binutils-avr avr-libc avrdude
+	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -I sources/ -c -o output/arduino/main_ram.o examples/main_ram.c
+	avr-gcc -mmcu=atmega328p -L"$(shell pwd)/output/arduino" -o output/arduino/main_ram.bin output/arduino/main_ram.o -lhal
+	avr-objcopy -O ihex -R .eeprom output/arduino/main_ram.bin output/arduino/main_ram.hex
+	sudo avrdude -F -V -c arduino -p ATMEGA328P -P /dev/ttyACM0 -b 115200 -U flash:w:output/arduino/main_ram.hex
+
 
 build_sram_so:
 	gcc -Wall -std=c11 -Dx86 -shared -o output/x86/sram.so -fPIC sources/mock_spi.c sources/sram.c
