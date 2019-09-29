@@ -6,5 +6,6 @@
 #include "sram.h"
 #include "hw_uart.h"
 #include "hp.h"
+#include "eeprom.h"
 
 #endif // __HAL_HEADER__

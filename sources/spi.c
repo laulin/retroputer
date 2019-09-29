@@ -34,9 +34,9 @@ uint8_t read_write_spi (uint8_t data)
     return SPDR ;
 }
 
-void write_bytes_spi (const uint8_t* data, uint8_t size)
+void write_bytes_spi (const uint8_t* data, uint16_t size)
 {
-    uint8_t i=0;
+    uint16_t i=0;
     for(i=0; i< size; i++)
     {
         // blocking R/W on SPI for one byte
@@ -47,9 +47,9 @@ void write_bytes_spi (const uint8_t* data, uint8_t size)
     }
 }
 
-void read_bytes_spi (uint8_t* data, uint8_t size)
+void read_bytes_spi (uint8_t* data, uint16_t size)
 {
-    uint8_t i=0;
+    uint16_t i=0;
     for(i=0; i< size; i++)
     {
         // write useless data
@@ -119,4 +119,13 @@ void set_all_select(void)
     ROM0_SELECT_PORT |= ROM0_SELECT_OFFSET;
     ROM1_SELECT_PORT |= ROM1_SELECT_OFFSET;
     IO_SELECT_PORT |= IO_SELECT_OFFSET;
+}
+
+void write_24bits_address_spi(uint32_t address)
+{
+    uint8_t array[3];
+    array[0] = (address & 0xFF0000)>>16;
+    array[1] = (address & 0xFF00)>>8;
+    array[2] = (address & 0xFF);
+    write_bytes_spi(array, 3);
 }

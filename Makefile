@@ -40,6 +40,7 @@ build_hal:
 	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -c -o output/arduino/port_expander.o sources/port_expander.c
 	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -c -o output/arduino/hw_uart.o sources/hw_uart.c
 	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -c -o output/arduino/hp.o sources/hp.c
+	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -c -o output/arduino/eeprom.o sources/eeprom.c
 	avr-ar -r "output/arduino/libhal.a" output/arduino/*.o
 
 setup:
