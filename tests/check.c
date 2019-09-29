@@ -13,9 +13,11 @@ const uint8_t PROGMEM WELCOME[] = "\n*** Test System ***\n";
 const uint8_t PROGMEM GOOD_BYE[] = "*******************\n";
 const uint8_t PROGMEM RESULT_OK[] = "OK\n";
 const uint8_t PROGMEM RESULT_KO[] = "KO\n";
+const uint8_t PROGMEM RESULT_DONE[] = "DONE\n";
 const uint8_t PROGMEM TEST_RAM_BANK_0[] = "Test RAM bank 0 : ";
 const uint8_t PROGMEM TEST_RAM_BANK_1[] = "Test RAM bank 1 : ";
 const uint8_t PROGMEM TEST_RAM_ALL[] = "Test RAM all : ";
+const uint8_t PROGMEM TEST_SOUND[] = "Test sound ... ";
 
 void test_ram_bank_0(void)
 {
@@ -88,14 +90,30 @@ void test_ram_bank_all(void)
     hw_uart_write_array(buffer, strlen(buffer));
 }
 
+void test_sound(void)
+{
+    strncpy_P(buffer, TEST_SOUND, LINE_SIZE);
+    hw_uart_write_array(buffer, strlen(buffer));
+
+    sound_hp(DO_4);
+    _delay_ms(100);
+    sound_hp(MI_4);
+    _delay_ms(100);
+    sound_hp(LA_4);
+    _delay_ms(100);
+    mute_hp();
+
+    strncpy_P(buffer, RESULT_DONE, LINE_SIZE);
+    hw_uart_write_array(buffer, strlen(buffer));
+}
+
 
 int main()
 {
     init_spi();
     init_hw_uart(baudrate_115200);
     init_sram();
-
-    
+    init_hp();    
     
     strncpy_P(buffer, WELCOME, LINE_SIZE);
     hw_uart_write_array(buffer, strlen(buffer));
@@ -103,6 +121,8 @@ int main()
     test_ram_bank_0();
     test_ram_bank_1();
     test_ram_bank_all();
+
+    test_sound();
 
     strncpy_P(buffer, GOOD_BYE, LINE_SIZE);
     hw_uart_write_array(buffer, strlen(buffer));

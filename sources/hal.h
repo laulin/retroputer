@@ -5,5 +5,6 @@
 #include "spi.h"
 #include "sram.h"
 #include "hw_uart.h"
+#include "hp.h"
 
 #endif // __HAL_HEADER__
