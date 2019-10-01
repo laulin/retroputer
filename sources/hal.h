@@ -7,5 +7,6 @@
 #include "hw_uart.h"
 #include "hp.h"
 #include "eeprom.h"
+#include "timer.h"
 
 #endif // __HAL_HEADER__

@@ -99,11 +99,11 @@ void test_sound(void)
     hw_uart_write_array(buffer, strlen(buffer));
 
     sound_hp(DO_4);
-    _delay_ms(100);
+    wait(100);
     sound_hp(MI_4);
-    _delay_ms(100);
+    wait(100);
     sound_hp(LA_4);
-    _delay_ms(100);
+    wait(100);
     mute_hp();
 
     strncpy_P(buffer, RESULT_DONE, LINE_SIZE);
@@ -142,7 +142,8 @@ int main()
     init_spi();
     init_hw_uart(baudrate_115200);
     init_sram();
-    init_hp();    
+    init_hp(); 
+    init_timer();   
     
     strncpy_P(buffer, WELCOME, LINE_SIZE);
     hw_uart_write_array(buffer, strlen(buffer));
