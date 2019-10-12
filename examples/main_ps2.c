@@ -13,14 +13,13 @@ int main()
     uint8_t buffer[16] = {0};
     while (1)
     {
-        if (key != 0)
+        uint8_t key = ps2_get_byte();
+        if (key != NO_KEY)
         {
             //hw_uart_write('a');
-            snprintf(buffer, 16, "0x%04x ", key);
+            snprintf(buffer, 16, "0x%02x ", key);
             hw_uart_write_array(buffer, 7);
-            key = 0;
         }
-        _delay_ms(1);
     }
     return 0;
 }

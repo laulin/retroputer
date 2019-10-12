@@ -24,10 +24,15 @@
 #define PS2_bit_size        11
 #define PS2_BUFFER_SIZE     64
 
-
-#endif
+#define BREAK               0xF0
+#define EXTENDED            0xE0
+#define PAUSE               0xE1
+#define NO_KEY              0x00
 
 // https://techdocs.altium.com/display/FPGA/PS2+Keyboard+Scan+Codes
 
-extern volatile uint16_t key;
 void init_ps2(void);
+uint8_t ps2_get_byte(void);
+uint8_t ps2_available_bytes(void);
+
+#endif
