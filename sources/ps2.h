@@ -20,7 +20,7 @@
 #define PS2_DATA_OFFSET     (1<<2)
 #define PS2_CLK_OFFSET      (1<<3)
 
-#define PS2_TIMEOUT         5
+#define PS2_TIMEOUT         250
 #define PS2_bit_size        11
 #define PS2_BUFFER_SIZE     64
 

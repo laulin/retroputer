@@ -20,7 +20,7 @@ int main()
             hw_uart_write_array(buffer, 7);
             key = 0;
         }
-        _delay_ms(100);
+        _delay_ms(1);
     }
     return 0;
 }

@@ -35,6 +35,8 @@ ISR(INT1_vect)
         if(bit_counter == PS2_bit_size)
         {
             key = bits;
+            bits = 0;
+            bit_counter = 0;
         }
 
     // }
