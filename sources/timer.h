@@ -13,7 +13,7 @@
 #define TIMER_DIVIDER       10
 
 void init_timer(void);
-uint32_t milisecs(void);
+uint32_t millisecs(void);
 void wait(uint32_t delay);
 
 #endif
