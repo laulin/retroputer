@@ -19,6 +19,13 @@ example_uart: setup build_hal
 	avr-objcopy -O ihex -R .eeprom output/arduino/main_uart.bin output/arduino/main_uart.hex
 	sudo avrdude -F -V -c arduino -p ATMEGA328P -P /dev/ttyACM0 -b 115200 -U flash:w:output/arduino/main_uart.hex
 
+example_ps2: setup build_hal
+	# need apt install gcc-avr binutils-avr avr-libc avrdude
+	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -I sources/ -c -o output/arduino/main_ps2.o examples/main_ps2.c
+	avr-gcc -mmcu=atmega328p -L"$(shell pwd)/output/arduino" -o output/arduino/main_ps2.bin output/arduino/main_ps2.o -lhal
+	avr-objcopy -O ihex -R .eeprom output/arduino/main_ps2.bin output/arduino/main_ps2.hex
+	sudo avrdude -F -V -c arduino -p ATMEGA328P -P /dev/ttyACM0 -b 115200 -U flash:w:output/arduino/main_ps2.hex
+
 system_check: setup build_hal
 	# need apt install gcc-avr binutils-avr avr-libc avrdude
 	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -I sources/ -c -o output/arduino/check.o tests/check.c
@@ -42,6 +49,7 @@ build_hal:
 	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -c -o output/arduino/hp.o sources/hp.c
 	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -c -o output/arduino/timer.o sources/timer.c
 	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -c -o output/arduino/eeprom.o sources/eeprom.c
+	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -c -o output/arduino/ps2.o sources/ps2.c
 	avr-ar -r "output/arduino/libhal.a" output/arduino/*.o
 
 setup:

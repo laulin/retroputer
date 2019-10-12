@@ -8,5 +8,6 @@
 #include "hp.h"
 #include "eeprom.h"
 #include "timer.h"
+#include "ps2.h"
 
 #endif // __HAL_HEADER__
