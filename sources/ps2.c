@@ -19,13 +19,17 @@ ISR(INT1_vect)
 
         if(current_time - previous_time > PS2_TIMEOUT)
         {
-            bit = 0;
+            bits = 0;
             bit_counter = 0;
         }
         previous_time = current_time;
 
-        bit = (PS2_DATA_PIN & PS2_DATA_OFFSET) != 0;
-        bits |= bit << bit_counter;
+        if (bit_counter > 0 && bit_counter <= 8)
+        {
+            bit = (PS2_DATA_PIN & PS2_DATA_OFFSET) != 0;
+            bits |= bit << (bit_counter-1);
+
+        }
         bit_counter++;
 
         if(bit_counter == PS2_bit_size)
