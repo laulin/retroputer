@@ -8,6 +8,9 @@
 #include <avr/io.h>
 
 #define HP_DDR          DDRD
+
+#endif // x86
+
 #define HP_OFFSET       (1<<6)
 
 #define clock_div_1024  5
@@ -30,6 +33,5 @@ void sound_hp(uint16_t note);
 
 void mute_hp();
 
-#endif // x86
 
 #endif // __HP_HEADER__
