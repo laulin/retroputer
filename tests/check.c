@@ -19,6 +19,7 @@ const uint8_t PROGMEM TEST_RAM_BANK_1[] = "Test RAM bank 1 : ";
 const uint8_t PROGMEM TEST_RAM_ALL[] = "Test RAM all : ";
 const uint8_t PROGMEM TEST_SOUND[] = "Test sound ... ";
 const uint8_t PROGMEM TEST_EEPROM_BANK_0[] = "Test EEPROM bank 0 : ";
+const uint8_t PROGMEM TEST_EEPROM_BANK_1[] = "Test EEPROM bank 1 : ";
 const uint8_t PROGMEM WRITE_EEPROM_KO[] = "BAD WRITE\n";
 const uint8_t PROGMEM READ_EEPROM_KO[] = "BAD READ\n";
 
@@ -112,17 +113,19 @@ void test_sound(void)
 
 void test_eeprom_bank_0(void)
 {
+    // Done in 5,38 ms
     strncpy_P(buffer, TEST_EEPROM_BANK_0, LINE_SIZE);
     hw_uart_write_array(buffer, strlen(buffer)); 
 
     uint8_t data[EEPROM_PAGE_SIZE] = {0x00};
+    uint8_t read_data[EEPROM_PAGE_SIZE] = {0x00};
+    uint16_t page = 0;
     data[0] = 0xAA;
     data[EEPROM_PAGE_SIZE-1] = 0x55;
-    uint8_t read_data[EEPROM_PAGE_SIZE] = {0x00};
-    while(is_eeprom_busy(0) != OK) {};
-    write_eeprom_page(data, 0);
-    while(is_eeprom_busy(0) != OK) {};
-    read_eeprom_page(read_data, 0);
+    while(is_eeprom_busy(page) != OK) {};
+    write_eeprom_page(data, page);
+    while(is_eeprom_busy(page) != OK) {};
+    read_eeprom_page(read_data, page);
     
 
     if(memcmp(data, read_data, EEPROM_PAGE_SIZE) != 0)
@@ -136,6 +139,35 @@ void test_eeprom_bank_0(void)
     hw_uart_write_array(buffer, strlen(buffer));
 }
 
+void test_eeprom_bank_1(void)
+{
+    strncpy_P(buffer, TEST_EEPROM_BANK_1, LINE_SIZE);
+    hw_uart_write_array(buffer, strlen(buffer));
+
+    uint8_t data[EEPROM_PAGE_SIZE] = {0x00};
+    uint8_t read_data[EEPROM_PAGE_SIZE] = {0x00};
+    uint16_t page = EEPROM_PAGE_NUMBER_PER_CHIP+1;
+    data[0] = 0xAA;
+    data[EEPROM_PAGE_SIZE - 1] = 0x55;
+    while (is_eeprom_busy(page) != OK)
+    {
+    };
+    write_eeprom_page(data, page);
+    while (is_eeprom_busy(page) != OK)
+    {
+    };
+    read_eeprom_page(read_data, page);
+
+    if (memcmp(data, read_data, EEPROM_PAGE_SIZE) != 0)
+    {
+        strncpy_P(buffer, RESULT_KO, LINE_SIZE);
+        hw_uart_write_array(buffer, strlen(buffer));
+        return;
+    }
+
+    strncpy_P(buffer, RESULT_OK, LINE_SIZE);
+    hw_uart_write_array(buffer, strlen(buffer));
+}
 
 int main()
 {
@@ -153,6 +185,7 @@ int main()
     test_ram_bank_all();
 
     test_eeprom_bank_0();
+    test_eeprom_bank_1();
 
     test_sound();
 

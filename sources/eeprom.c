@@ -129,7 +129,7 @@ uint8_t read_eeprom_page(uint8_t* bytes, uint16_t page)
     uint32_t local_address = get_local_address(page);
 
     clear_rom_select(chip);
-    read_write_spi(EEPROM_COMMAND_WRITE);
+    read_write_spi(EEPROM_COMMAND_READ);
     write_24bits_address_spi(local_address);
     read_bytes_spi(bytes, EEPROM_PAGE_SIZE);
     set_rom_select(chip);
