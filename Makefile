@@ -44,6 +44,14 @@ build_hal: setup
 	avr-gcc -Os -std=c11 -DF_CPU=16000000UL -mmcu=atmega328p -I includes/ -c -o output/arduino/ps2.o sources/ps2.c
 	avr-ar -r "lib/libhal.a" output/arduino/*.o
 
+install: 
+	mkdir -p /usr/local/lib/retroputer/hal
+	mkdir -p /usr/local/include/retroputer/hal
+	cp includes/*.h /usr/local/include/retroputer/hal
+	chmod a+r /usr/local/include/retroputer/hal/*.h
+	cp lib/*.a /usr/local/lib/retroputer/hal
+	chmod a+r /usr/local/lib/retroputer/hal/*.a
+
 setup:
 	mkdir -p output/
 	mkdir -p output/x86
