@@ -190,7 +190,7 @@ $ make build_hal
 $ sudo make install
 ```
 
-## Using HAL
+## Compile and link HAL
 
 For compiling :
 
@@ -203,3 +203,54 @@ For linking :
 ```
 avr-gcc -mmcu=atmega328p -L"/usr/local/lib/retroputer/hal" -o foobar.bin foobar.o -lhal
 ```
+
+## SPI
+
+The SPI module is the base of many other modules :
+
+- EEPROM
+- SRAM
+- Port expander
+
+For this reason, the function *init_spi()* must be called before any other *init_xxx()*.
+
+- *init_spi()* setup the spi hardare device. It set SPI at 8MHz clock, mode 0.
+- *read_write_spi()* is the basic function to read and write a byte. 
+- *write_bytes_spi()* writes a byte array. Can write up to 0xFFFF bytes. 
+- *read_bytes_spi()* reads a byte array. Can read up to 0xFFFF bytes. 
+- *clear_XXXX_select()* clear the related chip select pin to enable the device.
+- *set_XXXX_select()* set the related chip select pin to disable the device.
+- *write_24bits_address_spi()* is a conveniant function to push 3 bytes, ofently used for address.
+
+## SRAM
+
+The SRAM module manages both RAM chips. The addresses are continuous :
+
+- 0x00000 to 0x1FFFF is managed by chip 0 (RAM0)
+- 0x20000 to 0x3FFFF is managed by chip 1 (RAM1)
+
+Pro tips : the internal ATMEGA328 RAM is faster than SRAM modules.
+
+- *init_sram()* initialize the SRAM communication. Need *init_spi()* to be called previously.
+- *write_bytes_sram()* writes an array of bytes at specific address.
+- *read_bytes_sram()* reads an array of bytes at specific address.
+
+## EEPROM
+
+The EEPROM module manages both EEPROM chips. The pages are continuous :
+
+- 0 to 511 is managed by chip 0 (EEPROM0)
+- 512 to 1023 is managed by chip 1 (EEPROM1)
+
+- *init_sram()* initialize the SRAM communication. Need *init_spi()* to be called previously.
+- *write_bytes_sram()* writes an array of bytes at specific address.
+- *read_bytes_sram()* reads an array of bytes at specific address.
+
+
+- *init_eeprom()* initialize the EEPROM communication. Need *init_spi()* to be called previously.
+- *is_eeprom_busy()* checks if a page is available for operations.
+- *write_eeprom_page()* writes page (256 bytes) enterly.
+- *read_eeprom_page()* reads a page (256 bytes) enterly.
+
+
+
