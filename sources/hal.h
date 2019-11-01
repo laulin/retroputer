@@ -9,5 +9,6 @@
 #include "eeprom.h"
 #include "timer.h"
 #include "ps2.h"
+#include "port_expander.h"
 
 #endif // __HAL_HEADER__

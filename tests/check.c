@@ -169,6 +169,19 @@ void test_eeprom_bank_1(void)
     hw_uart_write_array(buffer, strlen(buffer));
 }
 
+void test_port_expander()
+{
+    uint8_t i = 0;
+
+    for(i=0; i<4; i++)
+    {
+        set_led(i);
+        wait(100);
+        clear_led(i);
+        wait(100);
+    }
+}
+
 int main()
 {
     init_spi();
@@ -176,6 +189,7 @@ int main()
     init_sram();
     init_hp(); 
     init_timer();   
+    init_port_expander();
     
     strncpy_P(buffer, WELCOME, LINE_SIZE);
     hw_uart_write_array(buffer, strlen(buffer));
@@ -186,6 +200,8 @@ int main()
 
     test_eeprom_bank_0();
     test_eeprom_bank_1();
+
+    test_port_expander();
 
     test_sound();
 
