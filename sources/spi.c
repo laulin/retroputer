@@ -19,7 +19,7 @@ void init_spi(void)
 
     // define SPI master 
     SPCR = (1<<SPE) | (1<<MSTR);
-    SPSR = 1<<SPI2X;
+    SPSR = 1<<SPI2X; // you can comment this line to decrease the SPI speed by 2
 }
 
 uint8_t read_write_spi (uint8_t data)
