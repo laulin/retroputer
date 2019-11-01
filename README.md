@@ -177,7 +177,11 @@ Two I2C plugs are available. One of them is specially designed to host a RTC clo
 
 No implementation in HAL yet.
 
-# Hadware Abstraction Layer
+# Hardware Abstraction Layer
+
+This minimal implementation allows you to start quickly. But it is important to
+understand what happen under the hood ... you may have another point of you an create
+a better implementation one :)
 
 ## Install
 
