@@ -242,10 +242,7 @@ The EEPROM module manages both EEPROM chips. The pages are continuous :
 - 0 to 511 is managed by chip 0 (EEPROM0)
 - 512 to 1023 is managed by chip 1 (EEPROM1)
 
-- *init_sram()* initialize the SRAM communication. Need *init_spi()* to be called previously.
-- *write_bytes_sram()* writes an array of bytes at specific address.
-- *read_bytes_sram()* reads an array of bytes at specific address.
-
+Functions : 
 
 - *init_eeprom()* initialize the EEPROM communication. Need *init_spi()* to be called previously.
 - *is_eeprom_busy()* checks if a page is available for operations.
