@@ -1,4 +1,5 @@
 #include "hw_uart.h"
+#include <avr/io.h>
 
 const uint16_t BAUDRATE[14] = {
     416, //2400
@@ -17,7 +18,7 @@ const uint16_t BAUDRATE[14] = {
     0 // 1000000
 };
 
-void init_hw_uart(uint32_t baudrate_index)
+void init_hw_uart(uint8_t baudrate_index)
 {
     uint16_t ubrr = BAUDRATE[baudrate_index];
     UBRR0H = (ubrr & 0xFF00) >>8;

@@ -4,10 +4,6 @@
 #include <stdint.h>
 #include "error.h"
 
-#ifndef x86
-#include <avr/io.h>
-#endif
-
 #define baudrate_2400       0
 #define baudrate_4800       1
 #define baudrate_9600       2
@@ -23,7 +19,7 @@
 #define baudrate_500000     12
 #define baudrate_1000000    13    
 
-void init_hw_uart(uint32_t baudrate);
+void init_hw_uart(uint8_t baudrate);
 
 uint8_t hw_uart_transmitted(void);
 uint8_t hw_uart_received(void);
