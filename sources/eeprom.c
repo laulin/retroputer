@@ -1,5 +1,18 @@
 #include "eeprom.h"
 
+#define EEPROM_COMMAND_READ 0x03
+#define EEPROM_COMMAND_WRITE 0x02
+#define EEPROM_COMMAND_WRITE_ENABLE 0x06
+#define EEPROM_COMMAND_WRITE_DISABLE 0x04
+#define EEPROM_COMMAND_READ_STATUS 0x05
+#define EEPROM_COMMAND_PAGE_ERASE 0x42
+#define EEPROM_COMMAND_CHIP_ERASE 0xB7
+
+#define EEPROM_WIP_FLAG 0x01
+
+#define EEPROM_CHIP_0 0
+#define EEPROM_CHIP_1 1
+
 void init_eeprom(void)
 {
     // nothing to do
