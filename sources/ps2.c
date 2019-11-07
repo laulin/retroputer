@@ -1,5 +1,20 @@
 #include "ps2.h"
 #include "timer.h"
+#include <avr/io.h>
+#include <avr/interrupt.h>
+
+#define PS2_DATA_DDR DDRD
+#define PS2_CLK_DDR DDRD
+
+#define PS2_DATA_PIN PIND
+#define PS2_CLK_PIN PIND
+
+#define PS2_DATA_OFFSET (1 << 2)
+#define PS2_CLK_OFFSET (1 << 3)
+
+#define PS2_TIMEOUT 250
+#define PS2_BIT_SIZE 11
+#define PS2_BUFFER_SIZE 64
 
 volatile uint32_t previous_time = 0;
 volatile uint16_t bits = 0;
@@ -30,7 +45,7 @@ ISR(INT1_vect)
     }
     bit_counter++;
 
-    if(bit_counter == PS2_bit_size)
+    if(bit_counter == PS2_BIT_SIZE)
     {
         if (key_buffer_length < PS2_BUFFER_SIZE)
         {
