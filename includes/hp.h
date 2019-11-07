@@ -4,15 +4,6 @@
 #include <stdint.h>
 #include "error.h"
 
-#ifndef x86
-#include <avr/io.h>
-
-#define HP_DDR          DDRD
-
-#endif // x86
-
-#define HP_OFFSET       (1<<6)
-
 #define clock_div_1024  5
 #define clock_div_256   4
 #define clock_div_64    3

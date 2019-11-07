@@ -1,4 +1,8 @@
 #include "hp.h"
+#include <avr/io.h>
+
+#define HP_DDR DDRD
+#define HP_OFFSET (1 << 6)
 
 void init_hp()
 {
