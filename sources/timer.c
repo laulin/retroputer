@@ -1,4 +1,8 @@
 #include "timer.h"
+#include <avr/io.h>
+
+#define TIMER_COMPARE_VALUE 199
+#define TIMER_DIVIDER 10
 
 // source : https://www.locoduino.org/spip.php?article89
 
